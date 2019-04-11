@@ -60,32 +60,31 @@ def renameFile(filePath, fileName, flags):
                 };
                 _gerber_name = _file_parts_minus[-2];
                 _gerber_extention = _file_parts_minus[-1];
+                # check if the extention is there in the list
                 if (_gerber_extention in _rename_list):
                     _message = "    File " + _file_name;
                     _rename_extention = _rename_list[_gerber_extention];
                     _rename_to_file_name = _gerber_name + '.' + _rename_extention;
                     _full_name_to_rename = os.path.join(filePath, _rename_to_file_name);
-                    _message = _message + "\t --> "  + _rename_to_file_name; #_file_path + _rename_to_file_name;
+                    _message = _message + "\t --> "  + _rename_to_file_name;
                     if (flags == 1):
                         os.rename(_full_original_name, _full_name_to_rename);
-                        _message = _message + "  passed.";
+                        _message = _message + ": rename passed.";
                     print(_message);
                     return 1;
     else:
-        print("File " + fullFileName + "is not exist.");
+        print("File " + _full_original_name + "is not exist.");
     return 0;
 
 # ----------------------------------------------------------------------------------------
 # Вот тут начало
 
 # переменные
-param_path_separator = "/"
 param_raw = ""
 param_path = ""
 param_file = ""
 param_file_name_only = ""
 param_file_extention = ""
-param_project_file_name = ""
 
 # проверяем, сколько параметров дано при вызове
 # нам нужен только один параметр: имя файла
@@ -109,9 +108,6 @@ param_file_name_only = os.path.splitext(param_file)[0]
 # выделим расширение из имени файла
 param_file_extention = os.path.splitext(param_file)[1]
 
-# выделим только имя до первого минуса справа
-param_project_file_name = param_file_name_only.split('-')[-2]
-
 # проверка расширения файла
 if param_file_extention != ".gbr":
     print("Error. This program needs a file name *.gbr as a parameter.")
@@ -121,7 +117,7 @@ if param_file_extention != ".gbr":
 param_path = os.path.dirname(param_raw)
 
 # если путь пустой, то указываем текущую папку
-if (param_path == ''): param_path = getPath();  # param_path = '.';
+if (param_path == ''): param_path = getPath();
 
 #print("-----------------------------------------------")
 #print("Param raw:", param_raw)
